@@ -13,7 +13,7 @@ router.get('/todos', function(req, res, next){
     });
 });
 
-router.get('/todos/:id', function(req, res, next){
+router.get('/todo/:id', function(req, res, next){
     db.todos.findOne({
         _id: mongojs.ObjectId(req.params.id)
     }, function(err, todo){
@@ -34,7 +34,7 @@ router.post('/todo', function(req, res, next){
             "error": "Invalid Data"
         });
     } else {
-        db.save(todo, function(err, result){
+        db.todos.save(todo, function(err, result){
             if(err){
                 res.send(err);
             } else {
@@ -44,7 +44,7 @@ router.post('/todo', function(req, res, next){
     }
 });
 
-router.put('/todo?:id', function(req, res, next){
+router.put('/todo/:id', function(req, res, next){
     var todo= req.body;
     var updObj = {};
     if(todo.isCompleted){
@@ -73,7 +73,7 @@ router.put('/todo?:id', function(req, res, next){
     }
 });
 
-router.delete('/todo?:id', function(req, res, next){
+router.delete('/todo/:id', function(req, res, next){
     db.todos.remove({
         _id: mongojs.ObjectId(req.params.id)
     },'', function(err, result){
